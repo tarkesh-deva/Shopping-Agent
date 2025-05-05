@@ -74,14 +74,28 @@ This script connects directly to Google Sheets and updates prices for all items 
 
 ### Setting up a Cron Job for Offline Updates
 
-To schedule the offline price update script to run automatically, you can set up a cron job:
+To schedule the offline price update script to run automatically at 11 AM and 8 PM IST, you can use the provided setup script:
 
 ```bash
-# Edit your crontab
-crontab -e
+# Make the script executable
+chmod +x setup_cron.sh
 
-# Add a line to run the script twice daily (at 8 AM and 8 PM)
-0 8,20 * * * cd /path/to/shopping-assistant && python offline_price_update.py --notify
+# Run the setup script
+./setup_cron.sh
+```
+
+This will add cron jobs to run the price update script twice daily. You can verify the cron jobs with:
+
+```bash
+crontab -l
+```
+
+The output should show something like:
+
+```
+# Shopping Assistant price update jobs
+0 11 * * * cd /path/to/shopping-assistant && source venv/bin/activate && python offline_price_update.py --notify # Run at 11 AM IST
+0 20 * * * cd /path/to/shopping-assistant && source venv/bin/activate && python offline_price_update.py --notify # Run at 8 PM IST
 ```
 
 ## License
