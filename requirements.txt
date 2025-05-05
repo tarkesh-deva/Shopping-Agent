@@ -1,0 +1,28 @@
+# Core server
+fastapi==0.104.1
+uvicorn==0.23.2
+python-dotenv==1.0.0
+pydantic==2.4.2
+
+# Google Sheets integration
+google-auth==2.23.3
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.1.1
+google-api-python-client==2.105.0
+gspread==5.12.0
+
+# Web scraping
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+selenium==4.14.0
+webdriver-manager==4.0.1
+
+# WhatsApp notifications
+twilio==8.9.1
+
+# Scheduling
+apscheduler==3.10.4
+
+# Utilities
+loguru==0.7.2
