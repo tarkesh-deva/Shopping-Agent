@@ -1,14 +1,15 @@
-# Shopping Assistant MCP Server
+# Men's Shopping Assistant
 
-A Master Control Program (MCP) server that monitors a Google Sheets shopping list, finds the best deals from various online retailers, and sends WhatsApp notifications for price drops.
+A shopping assistant that monitors a Google Sheets shopping list for men's clothing items, finds the best deals from various Indian online retailers (Flipkart, Myntra, Ajio), and sends WhatsApp notifications for price drops.
 
 ## Features
 
-- Google Sheets integration for tracking shopping items
-- Automated price checking from multiple retailers (Amazon, Walmart, Flipkart, Myntra, Ajio)
+- Google Sheets integration for tracking men's clothing items
+- Automated price checking from multiple Indian retailers (Flipkart, Myntra, Ajio)
 - Best deal finder with links to purchase
 - WhatsApp notifications for price drops
-- Scheduled updates to keep prices current
+- Scheduled updates every 12 hours to keep prices current
+- Offline price update capability when server is unavailable
 
 ## Setup
 
@@ -38,19 +39,50 @@ A Master Control Program (MCP) server that monitors a Google Sheets shopping lis
 
 Your Google Sheets should have the following columns:
 - Item Name
-- Target Price
-- Current Best Price
-- Best Price URL
-- Best Price Retailer
+- Target Price (₹)
+- Flipkart Price (₹)
+- Flipkart URL
+- Myntra Price (₹)
+- Myntra URL
+- Ajio Price (₹)
+- Ajio URL
+- Best Price (₹)
+- Best Retailer
 - Last Updated
 
 ## Configuration
 
-Edit `config.py` to customize:
-- Update frequency
-- Retailers to check
-- Notification preferences
-- Price threshold for alerts
+Edit `.env` file to customize:
+- Update frequency (default: every 12 hours)
+- Price threshold for alerts (default: 5%)
+- WhatsApp notification settings
+- Google Sheets connection details
+
+## Offline Price Updates
+
+When the server is offline, you can still update prices using the offline script:
+
+```bash
+# Update prices without notifications
+python offline_price_update.py
+
+# Update prices and send WhatsApp notifications for price drops
+python offline_price_update.py --notify
+```
+
+This script connects directly to Google Sheets and updates prices for all items in your shopping list. It can be run manually or scheduled using cron jobs.
+
+### Setting up a Cron Job for Offline Updates
+
+To schedule the offline price update script to run automatically, you can set up a cron job:
+
+```bash
+# Edit your crontab
+crontab -e
+
+# Add a line to run the script twice daily (at 8 AM and 8 PM)
+0 8,20 * * * cd /path/to/shopping-assistant && python offline_price_update.py --notify
+```
 
 ## License
 
